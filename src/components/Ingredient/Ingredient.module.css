@@ -1,0 +1,15 @@
+.ingredient__container {
+    position: relative;
+    width: 240px;
+}
+
+.ingredient__price {
+    display: flex;
+    justify-content: center;
+    grid-column-gap: 9px;
+    margin: 0;
+}
+
+.ingredient__name {
+    text-align: center;
+}

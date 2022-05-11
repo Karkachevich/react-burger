@@ -1,0 +1,59 @@
+.basketListContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.basketListBar {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+  min-width: 600px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  border: 3px solid #8585ad;
+  box-sizing: border-box;
+}
+
+.basketList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  align-items: flex-start;
+}
+
+.basketListElem {
+  display: flex;
+  align-items: center;
+}
+
+.bulletEdge {
+  display: flex;
+  margin-left: auto;
+}
+
+.orderInfo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.orderInfoPrice {
+  display: flex;
+  align-items: center;
+}
+
+.orderInfoPrice svg {
+  width: 33px;
+  height: 33px;
+  margin-right: 10px;
+}
