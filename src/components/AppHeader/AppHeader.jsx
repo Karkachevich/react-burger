@@ -12,43 +12,52 @@ const AppHeader = () => {
 
   return (
     <header className={style.header}>
-      <nav className={`${style.nav__container} `}>
+      <nav className={`${style.navigation__container} `}>
         <button
-          className={`${style.nav__element}`}
+          className={`${style.navigation__element} ${state !== "constructor" ? "" : `${style.element__active}`}`}
           type="button"
           onClick={() => setState("constructor")}
         >
           <BurgerIcon
             type={state === "constructor" ? "primary" : "secondary"}
           />
-          <p className={`${"text text_type_main-default pl-2"} ${
-          state === "constructor" ? "" : "text_color_inactive"
-        }`}>Конструктор</p>
+          <p
+            className={`${"text text_type_main-default pl-2"} ${
+              state === "constructor" ? "" : "text_color_inactive"
+            }`}
+          >
+            Конструктор
+          </p>
         </button>
         <button
-          className={`${style.nav__element}`}
+          className={`${style.navigation__element}  ${state !== "order_list" ? "" : `${style.element__active}`}`}
           type="button"
           onClick={() => setState("order_list")}
         >
-          <ListIcon
-            type={state=== "order_list" ? "primary" : "secondary"}
-          />
-          <p className={`${"text text_type_main-default pl-2"} ${
-          state === "order_list" ? "" : "text_color_inactive"
-        }`}>Лента заказов</p>
+          <ListIcon type={state === "order_list" ? "primary" : "secondary"} />
+          <p
+            className={`${"text text_type_main-default pl-2"} ${
+              state === "order_list" ? "" : "text_color_inactive"
+            }`}
+          >
+            Лента заказов
+          </p>
         </button>
       </nav>
       <Logo />
       <button
-        className={`${style.prof__container}`}
+        className={`${style.profile__container}  ${state !== "profile" ? "" : `${style.element__active}`} `}
         type="button"
-        onClick={() => setState('profile')}
-
+        onClick={() => setState("profile")}
       >
-        <ProfileIcon type={state === 'profile' ? 'primary' : 'secondary'} />
-        <p className={`${"text text_type_main-default pl-2"} ${
-          state === "profile" ? "" : "text_color_inactive"
-        }`}>Личный кабинет</p>
+        <ProfileIcon type={state === "profile" ? "primary" : "secondary"} />
+        <p
+          className={`${"text text_type_main-default pl-2"} ${
+            state === "profile" ? "" : "text_color_inactive"
+          }`}
+        >
+          Личный кабинет
+        </p>
       </button>
     </header>
   );

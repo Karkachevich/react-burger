@@ -1,9 +1,9 @@
-.basketListContainer {
+.container {
   display: flex;
   flex-direction: column;
 }
 
-.basketListBar {
+.filling {
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -23,37 +23,42 @@
   box-sizing: border-box;
 }
 
-.basketList {
+.filling__list {
   display: flex;
   flex-direction: column;
   gap: 18px;
-
   align-items: flex-start;
 }
 
-.basketListElem {
+.filling__element {
   display: flex;
   align-items: center;
+  list-style: none;
+}
+.filling__info {
+  display: flex;
+  margin-left: 13px;
+  width: 535px;
 }
 
-.bulletEdge {
+.container__bun {
   display: flex;
   margin-left: auto;
 }
 
-.orderInfo {
+.order__info {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
-.orderInfoPrice {
+.order__price {
   display: flex;
   align-items: center;
+  margin-right: 40px;
 }
 
-.orderInfoPrice svg {
+.order__price svg {
   width: 33px;
   height: 33px;
-  margin-right: 10px;
 }

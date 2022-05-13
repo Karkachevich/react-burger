@@ -1,5 +1,6 @@
 import React from "react";
-
+import PropTypes from "prop-types";
+import { dataPropTypes } from "../../utils/types";
 import {
   ConstructorElement,
   DragIcon,
@@ -7,88 +8,90 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "./BurgerConstructor.module.css";
+import style from "./BurgerConstructor.module.css";
 
-const BurgerConstructor = ({ data }) => {
+const BurgerConstructor = ({ data, onOpenModal }) => {
   const [totalPrice, setTotalPrice] = React.useState(0);
-  const [topBun, setTopBun] = React.useState("");
-  const [bottomBun, setBottomBun] = React.useState("");
+  const [burgerBun, setBurgerBun] = React.useState("");
+
+  const handleOpenModal = () => {
+    onOpenModal({
+      type: "order_details",
+      orderNumber: "034536",
+      header: "",
+    });
+  };
+
+  const ingredients = data.filter((i) => i.type !== "bun");
 
   React.useEffect(() => {
-    setTotalPrice(
-      data
-        .map((el) => data.find((i) => i._id === el._id).price)
-        .reduce((acc, price) => acc + price)
-    );
+    const bun = data.find((i) => i.type === "bun");
+    setBurgerBun(bun);
 
-    let bun;
-    const buns = data.filter((i) => i.type === "bun");
-    buns.some((element) => {
-      if (data.find((i) => i._id === element._id)) {
-        bun = element;
-        return true;
-      }
-
-      return false;
+    let sumPrice = 0;
+    ingredients.forEach((element) => {
+      sumPrice += element.price;
     });
 
-    setTopBun(bun);
-    setBottomBun(bun);
-  }, [data]);
-
-  const ingredient = data.filter((i) => i.type !== "bun");
+    setTotalPrice(sumPrice + bun.price * 2);
+  }, [data, ingredients]);
 
   return (
-    <>
-      <div className={`${styles.basketListContainer} ${"mt-30 ml-10"}`}>
-        <div className={`${styles.bulletEdge} ${"mb-4 mr-6"}`}>
-          <ConstructorElement
-            type={"top"}
-            isLocked={true}
-            text={`${topBun.name} (верх)`}
-            price={topBun.price}
-            thumbnail={topBun.image}
-          />
-        </div>
-        <div className={styles.basketListBar}>
-          <div className={`${styles.basketList} ${"ml-2"}`}>
-            {ingredient.map((element) => (
-              <div className={`${styles.basketListElem}`} key={element._id}>
-                <DragIcon type="primary" />
+    <section className={`${style.container} mt-30`}>
+      <div className={`${style.container__bun} mb-1 mr-6`}>
+        <ConstructorElement
+          type={"top"}
+          isLocked={true}
+          text={`${burgerBun.name} (верх)`}
+          price={burgerBun.price}
+          thumbnail={burgerBun.image}
+        />
+      </div>
+      <div className={style.filling}>
+        <ul className={`${style.filling__list} mr-4`}>
+          {ingredients.map((element) => (
+            <li className={style.filling__element} key={element._id}>
+              <DragIcon type="primary" />
+              <div className={style.filling__info}>
                 <ConstructorElement
                   isLocked={false}
-                  text={`${element.name}`}
+                  text={element.name}
                   price={element.price}
                   thumbnail={element.image}
                 />
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className={`${styles.bulletEdge}  ${"mt-4 mr-6"}`}>
-          <ConstructorElement
-            type={"bottom"}
-            isLocked={true}
-            text={`${bottomBun.name} (низ)`}
-            price={bottomBun.price}
-            thumbnail={bottomBun.image}
-          />
-        </div>
-        <div className={`${styles.orderInfo} ${"mt-10 mr-4"}`}>
-          <div className={styles.orderInfoPrice}>
-            <span className="text text_type_digits-medium mr-2">
-              {totalPrice}
-            </span>
-            <CurrencyIcon type="primary" />
-          </div>
-          <Button type="primary" size="large">
-            Оформить заказ
-          </Button>
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
-    </>
+
+      <div className={`${style.container__bun} mt-4 mr-6`}>
+        <ConstructorElement
+          type={"bottom"}
+          isLocked={true}
+          text={`${burgerBun.name} (низ)`}
+          price={burgerBun.price}
+          thumbnail={burgerBun.image}
+        />
+      </div>
+      <div className={`${style.order__info} mt-10 mr-4`}>
+        <div className={style.order__price}>
+          <span className="text text_type_digits-medium mr-2">
+            {totalPrice}
+          </span>
+          <CurrencyIcon type="primary" />
+        </div>
+        <Button type="primary" size="large" onClick={handleOpenModal}>
+          Оформить заказ
+        </Button>
+      </div>
+    </section>
   );
+};
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(dataPropTypes.isRequired).isRequired,
+  onOpenModal: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;
