@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+.container__element {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  max-height: 800px;
+  max-width: 600px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+::-webkit-scrollbar-thumb {
+  background: #8585ad;
+  border: 3px solid #8585ad;
+  box-sizing: border-box;
+}

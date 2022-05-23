@@ -1,0 +1,30 @@
+.container {
+    position: relative;
+    width: 240px;
+    cursor: pointer;
+    list-style: none;
+    margin-top: 24px;
+    margin-bottom: 32px;
+}
+
+.container:nth-last-child(-n+2) {
+    margin-bottom: 8px;
+}
+
+.container:nth-child(odd){
+    margin-left: 16px;
+}
+.container:nth-child(even){
+    margin-left: 24px;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+    grid-column-gap: 9px;
+    margin: 0;
+}
+
+.name {
+    text-align: center;
+}

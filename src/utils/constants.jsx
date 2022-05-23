@@ -1,0 +1,1 @@
+export const urlDomain = "https://norma.nomoreparties.space/api";
