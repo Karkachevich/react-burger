@@ -5,11 +5,17 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-const getIngridients = (url) => {
-  
-  return fetch(url)
-    .then(checkResponse)
-    
+export const getIngridients = (url) => {
+  return fetch(url).then(checkResponse);
 };
 
-export default getIngridients;
+export const createOrder = (url, basketIngredientsId) => {
+  return fetch(`${url}/orders`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ingredients: basketIngredientsId,
+    }),
+  }).then(checkResponse);
+};
+
