@@ -5,6 +5,10 @@
   margin: 0 auto;
 }
 
+.main {
+  display: flex;
+}
+
 
 
 

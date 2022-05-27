@@ -72,7 +72,7 @@ function App() {
             value={{ totalPriceState, totalPriceDispatcher }}
           >
             <AppHeader />
-            <main style={{ display: "flex" }}>
+            <main className={style.main}>
               {isLoading && "Загрузка..."}
               {hasError && "Произошла ошибка загрузки"}
               {!isLoading && !hasError && ingredients.length && (

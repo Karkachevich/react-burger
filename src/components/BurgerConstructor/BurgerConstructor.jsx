@@ -37,7 +37,7 @@ const BurgerConstructor = ({ onOpenModal }) => {
         setOrderNumber(`${res.order.number}`);
       })
       .catch((err) => {
-        throw new Error(err);
+        console.log("Ошибка создания заказа", err.message);
       });
   };
 
