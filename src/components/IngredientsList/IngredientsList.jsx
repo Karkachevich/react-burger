@@ -5,8 +5,9 @@ import Ingredient from "../Ingredient/ingredient";
 import style from "./IngredientsList.module.css";
 
 const IngredientsList = ({ id, title, ingredients, handleOpenModal }) => {
+
   return (
-    <>
+    <section>
       <h3 id={id} className="text text_type_main-medium mt-10">
         {title}
       </h3>
@@ -19,7 +20,7 @@ const IngredientsList = ({ id, title, ingredients, handleOpenModal }) => {
           />
         ))}
       </ul>
-    </>
+    </section>
   );
 };
 

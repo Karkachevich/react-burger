@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { dataPropTypes } from "../../utils/types";
 import {
   ConstructorElement,
   DragIcon,
@@ -9,32 +8,59 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import style from "./BurgerConstructor.module.css";
+import { IngredientsContext } from "../../services/appContext";
+import { createOrder } from "../Api/Api";
+import { urlDomain } from "../../utils/constants";
+import {
+  OrderNumberContext,
+  TotalPriceContext,
+} from "../../services/appContext";
 
-const BurgerConstructor = ({ data, onOpenModal }) => {
-  const [totalPrice, setTotalPrice] = React.useState(0);
+const BurgerConstructor = ({ onOpenModal }) => {
   const [burgerBun, setBurgerBun] = React.useState("");
+  const { totalPriceState, totalPriceDispatcher } =
+    React.useContext(TotalPriceContext);
+  const { ingredients } = React.useContext(IngredientsContext);
+  const { setOrderNumber } = React.useContext(OrderNumberContext);
+
+  const ingredientsConstructor = ingredients.filter((i) => i.type !== "bun");
+  const ingredientIdConstructor = ingredients.map((i) => i._id);
 
   const handleOpenModal = () => {
-    onOpenModal({
-      type: "order_details",
-      orderNumber: "034536",
-      header: "",
-    });
+    createOrder(urlDomain, ingredientIdConstructor)
+      .then((res) => {
+        onOpenModal({
+          type: "order_details",
+          orderNumber: `${res.order.number}`,
+          header: "",
+        });
+        setOrderNumber(`${res.order.number}`);
+      })
+      .catch((err) => {
+        console.log("Ошибка создания заказа", err.message);
+      });
   };
 
-  const ingredients = data.filter((i) => i.type !== "bun");
-
   React.useEffect(() => {
-    const bun = data.find((i) => i.type === "bun");
+    const bun = ingredients.find((i) => i.type === "bun");
     setBurgerBun(bun);
 
-    let sumPrice = 0;
-    ingredients.forEach((element) => {
-      sumPrice += element.price;
-    });
+    if (ingredients) {
+      let sumPrice = 0;
+      ingredients.forEach((element) => {
+        if (element.type !== "bun") sumPrice += element.price;
+      });
 
-    setTotalPrice(sumPrice + bun.price * 2);
-  }, [data, ingredients]);
+      totalPriceDispatcher({
+        type: "set",
+        payload: bun.price * 2 + sumPrice,
+      });
+    } else {
+      totalPriceDispatcher({
+        type: "reset",
+      });
+    }
+  }, [ingredients, totalPriceDispatcher]);
 
   return (
     <section className={`${style.container} mt-30`}>
@@ -49,7 +75,7 @@ const BurgerConstructor = ({ data, onOpenModal }) => {
       </div>
       <div className={style.filling}>
         <ul className={`${style.filling__list} mr-4`}>
-          {ingredients.map((element) => (
+          {ingredientsConstructor.map((element) => (
             <li className={style.filling__element} key={element._id}>
               <DragIcon type="primary" />
               <div className={style.filling__info}>
@@ -77,7 +103,7 @@ const BurgerConstructor = ({ data, onOpenModal }) => {
       <div className={`${style.order__info} mt-10 mr-4`}>
         <div className={style.order__price}>
           <span className="text text_type_digits-medium mr-2">
-            {totalPrice}
+            {totalPriceState.count}
           </span>
           <CurrencyIcon type="primary" />
         </div>
@@ -90,7 +116,6 @@ const BurgerConstructor = ({ data, onOpenModal }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes.isRequired).isRequired,
   onOpenModal: PropTypes.func.isRequired,
 };
 
