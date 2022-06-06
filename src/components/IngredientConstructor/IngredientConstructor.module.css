@@ -1,0 +1,20 @@
+.filling__element {
+  display: flex;
+  align-items: center;
+  cursor: grab;
+}
+
+.filling__element:active {
+  cursor: grabbing;
+}
+
+.filling__info {
+  display: flex;
+  width: 535px;
+}
+
+.opacity {
+  opacity: 0;
+}
+
+

@@ -9,6 +9,7 @@
   flex-direction: column;
   max-height: 600px;
   min-width: 600px;
+  margin-left: 12px;
 }
 
 ::-webkit-scrollbar {
@@ -26,6 +27,9 @@
 .filling__list {
   display: flex;
   flex-direction: column;
+  min-height: 100px;
+  padding-left: 10px;
+
   gap: 18px;
   align-items: flex-start;
 }
@@ -43,7 +47,7 @@
 
 .container__bun {
   display: flex;
-  margin-left: auto;
+  padding-left: 55px;
 }
 
 .order__info {
@@ -61,4 +65,9 @@
 .order__price svg {
   width: 33px;
   height: 33px;
+}
+
+.hover {
+  box-shadow: 0 0 10px 10px rgba(234, 234, 239, 0.25),
+    0 0 10px 10px rgb(234, 234, 239, 0.25);
 }

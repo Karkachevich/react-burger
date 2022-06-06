@@ -2,51 +2,68 @@ import React from "react";
 import style from "./BurgerIngredients.module.css";
 import Tabs from "../Tabs/Tabs";
 import IngredientsList from "../IngredientsList/IngredientsList";
-import PropTypes from "prop-types";
-import { IngredientsContext } from "../../services/appContext";
 
-const BurgerIngredients = ({ handleOpenModal }) => {
-  const { ingredients } = React.useContext(IngredientsContext);
-  const [current, setCurrent] = React.useState("bun");
+import { useSelector } from "react-redux";
+
+
+const BurgerIngredients = () => {
   
-  const onClickTab = (evt) => {
-    setCurrent(evt);
-    document.getElementById(evt).scrollIntoView({
-      block: "start",
-      behavior: "smooth",
-    });
+  const { ingredients } = useSelector((state) => state.ingredients);
+  const [current, setCurrent] = React.useState("bun");
+
+  const onClickTab = (tab) => {
+    setCurrent(tab);
+    const element = document.getElementById(tab);
+    if (element) element.scrollIntoView({ behavior: "smooth" });
+  };
+
+  
+  const onScroll = () => {
+    const containerRecTop = document.getElementById("container").getBoundingClientRect().top;
+    const saueceRecTop = document.getElementById("sauce").getBoundingClientRect().top;
+    const bunRecTop = document.getElementById("bun").getBoundingClientRect().top;
+ 
+    if (bunRecTop + containerRecTop > containerRecTop) {
+      setCurrent("bun");
+    } else if (saueceRecTop + containerRecTop > 0) {
+      setCurrent("sauce");
+    } else {
+      setCurrent("main");
+    }
   };
 
   return (
     <section className={style.container}>
       <h2 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h2>
       <Tabs current={current} onClickTab={onClickTab} />
-      <div className={style.container__element}>
+      <div
+        id="container"
+        className={style.container__element}
+        onScroll={onScroll}
+      >
         <IngredientsList
           id="bun"
           title="Булки"
           ingredients={ingredients.filter((i) => i.type === "bun")}
-          handleOpenModal={handleOpenModal}
+          
         />
         <IngredientsList
           id="sauce"
           title="Соусы"
           ingredients={ingredients.filter((i) => i.type === "sauce")}
-          handleOpenModal={handleOpenModal}
+         
         />
         <IngredientsList
           id="main"
           title="Начинки"
           ingredients={ingredients.filter((i) => i.type === "main")}
-          handleOpenModal={handleOpenModal}
+         
         />
       </div>
     </section>
   );
 };
 
-BurgerIngredients.propTypes = {
-  handleOpenModal: PropTypes.func.isRequired,
-};
+
 
 export default BurgerIngredients;

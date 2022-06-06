@@ -2,11 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import style from "./OrderDetails.module.css";
 import done from "../../images/done.svg";
-import { OrderNumberContext } from "../../services/appContext";
 
-const OrderDetails = () => {
-  const { orderNumber } = React.useContext(OrderNumberContext);
 
+const OrderDetails = ({ orderNumber }) => {
   return (
     <div className={style.modal}>
       <div
@@ -30,5 +28,8 @@ const OrderDetails = () => {
   );
 };
 
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired
+};
 
 export default OrderDetails;

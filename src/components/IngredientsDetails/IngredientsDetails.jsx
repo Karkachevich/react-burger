@@ -1,3 +1,4 @@
+import React from "react";
 import style from "./IngredientsDetails.module.css";
 import { dataPropTypes } from "../../utils/types";
 
