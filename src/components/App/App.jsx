@@ -3,96 +3,65 @@ import style from "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { urlDomain } from "../../utils/constants";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientsDetails/IngredientsDetails";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { getIngridients } from "../Api/Api";
-import {
-  IngredientsContext,
-  OrderNumberContext,
-  TotalPriceContext,
-} from "../../services/appContext";
-
-const totalPriceInitialState =  { count: 0 };
-
-function totalPriceReducer(state, action) {
-  switch (action.type) {
-    case "set":
-      return { count: action.payload };
-    case "reset":
-      return totalPriceInitialState;
-    default:
-      throw new Error(`erorr: ${action.type}`);
-  }
-}
+import { getIngredients } from "../../services/api";
+import { Loader } from "../../ui/loader/loader";
+import Actions from "../../services/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [modalInfo, setModalInfo] = React.useState(null);
-  const [orderNumber, setOrderNumber] = React.useState();
-  const [totalPriceState, totalPriceDispatcher] = React.useReducer(
-    totalPriceReducer,
-    totalPriceInitialState,
-    undefined
+  const dispatch = useDispatch();
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const isLoading = useSelector((state) => state.ingredients.loading);
+  const hasError = useSelector((state) => state.ingredients.error);
+  const orderNumber = useSelector((state) => state.order.orderNumber);
+  const detailedIngredient = useSelector(
+    (state) => state.currentIngredient.detailedIngredient
   );
 
-  const handleOpenModal = (info) => {
-    setModalInfo(info);
-    setModalVisible(true);
+  const handleCloseOrderModal = () => {
+    dispatch({ type: Actions.RESET_CONSTRUCTOR_INGREDIENTS });
+    dispatch({ type: Actions.RESET_ORDER_NUMBER });
   };
 
-  const handleCloseModal = () => {
-    setModalVisible(false);
+  const handleCloseDetailedIngredientModal = () => {
+    dispatch({ type: Actions.RESET_DETAILED_INGREDIENT });
   };
-
-  const [data, setIngredients] = React.useState({
-    isLoading: false,
-    hasError: false,
-    ingredients: [],
-  });
 
   React.useEffect(() => {
-    getIngridients(`${urlDomain}/ingredients`)
-      .then((res) =>
-        setIngredients({ ingredients: res.data, isLoading: false })
-      )
-      .catch((err) => {
-        setIngredients({ hasError: true, isLoading: false });
-      });
-  }, []);
-
-  const { ingredients, isLoading, hasError } = data;
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <div className={style.App}>
-      <IngredientsContext.Provider value={{ ingredients }}>
-        <OrderNumberContext.Provider value={{ orderNumber, setOrderNumber }}>
-          <TotalPriceContext.Provider
-            value={{ totalPriceState, totalPriceDispatcher }}
-          >
-            <AppHeader />
-            <main className={style.main}>
-              {isLoading && "Загрузка..."}
-              {hasError && "Произошла ошибка загрузки"}
-              {!isLoading && !hasError && ingredients.length && (
-                <BurgerIngredients handleOpenModal={handleOpenModal} />
-              )}
-              {!isLoading && !hasError && ingredients.length && (
-                <BurgerConstructor onOpenModal={handleOpenModal} />
-              )}
-            </main>
-            {modalVisible && (
-              <Modal header={modalInfo.header} onClose={handleCloseModal}>
-                {modalInfo.type === "ingredient_details" && (
-                  <IngredientDetails ingredient={modalInfo.ingredient} />
-                )}
-                {modalInfo.type === "order_details" && <OrderDetails />}
-              </Modal>
-            )}
-          </TotalPriceContext.Provider>
-        </OrderNumberContext.Provider>
-      </IngredientsContext.Provider>
+      <AppHeader />
+      <DndProvider backend={HTML5Backend}>
+        <main className={style.main}>
+          {isLoading && <Loader size="large" />}
+          {hasError && (
+            <span className="text text_type_main-default mt-20">{`Произошла ошибка загрузки (${hasError})`}</span>
+          )}
+          {ingredients.length && <BurgerIngredients />}
+          {ingredients.length && <BurgerConstructor />}
+        </main>
+      </DndProvider>
+      {orderNumber && (
+        <Modal header="" onClose={handleCloseOrderModal}>
+          <OrderDetails orderNumber={orderNumber} />
+        </Modal>
+      )}
+      {detailedIngredient && (
+        <Modal
+          header="Детали ингредиента"
+          onClose={handleCloseDetailedIngredientModal}
+        >
+          <IngredientDetails ingredient={detailedIngredient} />
+        </Modal>
+      )}
     </div>
   );
 }
