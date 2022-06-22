@@ -1,5 +1,5 @@
 
-* [Ссылка GitHub Pages](https://https://karkachevich.github.io/react-burger/)
+* [Ссылка GitHub Pages](https://karkachevich.github.io/react-burger/)
 
 # Getting Started with Create React App
 
