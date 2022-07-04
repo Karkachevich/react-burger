@@ -1,6 +1,7 @@
 import { urlDomain } from "../utils/constants";
 
 import Actions from "./actions";
+import { setTokens, auth } from "./auth";
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -58,4 +59,54 @@ export const createOrder = (ingredients) => (dispatch) => {
         payload: err.toLocaleString(),
       });
     });
+};
+
+const restoreSession = async ({ refreshToken }) => {
+  const success = await fetch(`${urlDomain}/auth/token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token: refreshToken }),
+  })
+    .then((res) => checkResponse(res))
+    .then((parsedResponse) => {
+      if (parsedResponse.success) {
+        const { accessToken, refreshToken } = parsedResponse;
+        setTokens({ accessToken, refreshToken });
+
+        return true;
+      }
+
+      return Promise.reject(parsedResponse.message);
+    })
+    .catch((err) => false);
+
+  return success;
+};
+
+export const request = async ({
+  url = "",
+  method = "",
+  body = {},
+  headers = {},
+}) => {
+  const { accessToken, refreshToken } = auth();
+
+  if (!accessToken && refreshToken) {
+    await restoreSession({ refreshToken });
+  }
+
+  const result = await fetch(new URL(url, `${urlDomain}/`).href, {
+    method,
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken || null,
+      ...headers,
+    },
+    body: ["GET", "HEAD"].includes(method) && body ? null : body,
+  }).then((res) => checkResponse(res));
+
+  return result;
 };
