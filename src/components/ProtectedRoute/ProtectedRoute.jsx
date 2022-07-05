@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import style from "./ProtectedRoute.module.css";
 import { auth } from "../../services/auth";
+import { fetchUser } from "../../services/actions/auth";
 
 export function ProtectedRoute({
   children,
@@ -12,8 +13,9 @@ export function ProtectedRoute({
 }) {
   const { user, loading } = useSelector((state) => state.auth);
   const { accessToken, refreshToken } = auth();
-
+  const dispatch = useDispatch();
   const [loadingText, setLoadingText] = useState("");
+
   const isAuth = useCallback(
     () => (accessToken || refreshToken) && user,
     [accessToken, refreshToken, user]
@@ -32,6 +34,13 @@ export function ProtectedRoute({
     return () => clearInterval(interval);
   }, [setLoadingText, loading]);
 
+  useEffect(() => {
+    if ((accessToken || refreshToken) && !user) {
+      dispatch(fetchUser());
+    }
+  }, [accessToken, dispatch, refreshToken]);
+
+
   const render = () => {
     if (accessType !== "anonymous" && !user && loading) {
       return (
@@ -39,7 +48,7 @@ export function ProtectedRoute({
           {loadingText}
         </div>
       );
-    } else {
+    } 
       let elementToRender = <Route {...rest} render={() => children} />;
       switch (accessType) {
         case "authorized":
@@ -82,7 +91,7 @@ export function ProtectedRoute({
           break;
       }
       return elementToRender;
-    }
+    
   };
   return render();
 }

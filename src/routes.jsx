@@ -9,7 +9,7 @@ import {
   ForgotPasswordPage,
   ResetPasswordPage,
   ProfilePage,
-  IngredientsPage
+  IngredientsPage,
 } from "./pages";
 
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
@@ -17,13 +17,13 @@ import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 export function Routes() {
   const history = useHistory();
   const location = useLocation();
- 
-  const ingredientModal = location.state && location.state.ingredientModal;
+
+  const background = location.state && location.state.ingredientModal;
 
   return (
     <>
-      <Switch location={ingredientModal || location}>
-        <Route exact path="/" component={MainPage} />
+      <Switch location={background || location}>
+        <Route exact path={['/', '/react-burger']} component={MainPage}/>        
         <ProtectedRoute
           exact
           path={["/profile", "/profile/orders", "/profile/orders/:id"]}
@@ -43,9 +43,10 @@ export function Routes() {
         <ProtectedRoute exact path="/reset-password" accessType="unauthorized">
           <ResetPasswordPage />
         </ProtectedRoute>
-        <Route exact path="/ingredients/:id" component={IngredientsPage} />
+        <Route exact path="/ingredients/:id" component={IngredientsPage}/>
       </Switch>
-      {ingredientModal && (
+
+      {background && (
         <Route
           path="/ingredients/:id"
           children={
@@ -54,8 +55,8 @@ export function Routes() {
             </Modal>
           }
         />
-        )}
+      )}
     </>
   );
 }
-// 
+//

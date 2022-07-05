@@ -1,5 +1,4 @@
 import { urlDomain } from "../utils/constants";
-
 import Actions from "./actions";
 import { setTokens, auth } from "./auth";
 
@@ -85,7 +84,7 @@ const restoreSession = async ({ refreshToken }) => {
 
 export const request = async ({
   url = "",
-  method = "",
+  method = "GET",
   body = {},
   headers = {},
 }) => {

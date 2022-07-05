@@ -24,9 +24,7 @@ export function IngredientsPage() {
 
       if (foundIngredient) {
         setIngredient(foundIngredient);
-      } else {
-        redirectToMainPage();
-      }
+      } 
     }
   }, [history, id, ingredients, redirectToMainPage]);
 

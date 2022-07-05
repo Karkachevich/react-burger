@@ -7,18 +7,19 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { NavLink, matchPath, useLocation } from "react-router-dom";
+import { NavLink, matchPath, useLocation, Link } from "react-router-dom";
 
 const AppHeader = () => {
+  
   const location = useLocation();
 
-  const matchedMain = matchPath(location.pathname, { path: "/", exact: true });
+  const matchedMain = matchPath(location.pathname, { path: ['/', '/react-burger'], exact: true });
   const matchedOrders = matchPath(location.pathname, {
     path: "/orders",
-    exact: true,
+    exact:  true
   });
-  const matchedProfile = matchPath(location.pathname, { path: "/profile" });
-
+  const matchedProfile = matchPath(location.pathname, { path: "/profile", exact:  true});
+  
   return (
     <header className={style.header}>
       <nav className={`${style.navigation__container} `}>
@@ -30,7 +31,9 @@ const AppHeader = () => {
           to="/"
         >
           <BurgerIcon type={matchedMain ? "primary" : "secondary"} />
-          <p className="text text_type_main-default pl-2">
+          <p className={`${"text text_type_main-default pl-2"} ${
+              matchedMain === null ? "" : `${style.element__active}`
+            }`}>
             Конструктор
           </p>
         </NavLink>
@@ -48,7 +51,10 @@ const AppHeader = () => {
           </p>
         </NavLink>
       </nav>
+      <Link to='/'>
       <Logo />
+      </Link>
+      
       <NavLink
         className={style.profile__container}
         activeClassName={style.element__active}
