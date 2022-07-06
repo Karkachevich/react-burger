@@ -2,6 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+}
+
+.text {
+    text-align: center;
 }
 
 .modal__image {
@@ -14,7 +19,8 @@
 
 .ingredients {
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 100%;
     justify-content: center;
     margin-bottom: 20px;
 }

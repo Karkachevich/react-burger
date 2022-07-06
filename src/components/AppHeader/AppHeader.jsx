@@ -7,58 +7,65 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const AppHeader = () => {
-  const [state, setState] = React.useState("constructor");
+import { NavLink, matchPath, useLocation, Link } from "react-router-dom";
 
+const AppHeader = () => {
+  
+  const location = useLocation();
+
+  const matchedMain = matchPath(location.pathname, { path: ['/', '/react-burger'], exact: true });
+  const matchedOrders = matchPath(location.pathname, {
+    path: "/orders",
+    exact:  true
+  });
+  const matchedProfile = matchPath(location.pathname, { path: "/profile", exact:  true});
+  
   return (
     <header className={style.header}>
       <nav className={`${style.navigation__container} `}>
-        <button
-          className={`${style.navigation__element} ${state !== "constructor" ? "" : `${style.element__active}`}`}
+        <NavLink
+          className={style.navigation__element}
+          activeClassName={style.element__active}
           type="button"
-          onClick={() => setState("constructor")}
+          exact
+          to="/"
         >
-          <BurgerIcon
-            type={state === "constructor" ? "primary" : "secondary"}
-          />
-          <p
-            className={`${"text text_type_main-default pl-2"} ${
-              state === "constructor" ? "" : "text_color_inactive"
-            }`}
-          >
+          <BurgerIcon type={matchedMain ? "primary" : "secondary"} />
+          <p className={`${"text text_type_main-default pl-2"} ${
+              matchedMain === null ? "" : `${style.element__active}`
+            }`}>
             Конструктор
           </p>
-        </button>
-        <button
-          className={`${style.navigation__element}  ${state !== "order_list" ? "" : `${style.element__active}`}`}
+        </NavLink>
+
+        <NavLink
+          className={style.navigation__element}
+          activeClassName={style.element__active}
           type="button"
-          onClick={() => setState("order_list")}
+          exact
+          to="/orders"
         >
-          <ListIcon type={state === "order_list" ? "primary" : "secondary"} />
-          <p
-            className={`${"text text_type_main-default pl-2"} ${
-              state === "order_list" ? "" : "text_color_inactive"
-            }`}
-          >
+          <ListIcon type={matchedOrders ? "primary" : "secondary"} />
+          <p className="text text_type_main-default pl-2">
             Лента заказов
           </p>
-        </button>
+        </NavLink>
       </nav>
+      <Link to='/'>
       <Logo />
-      <button
-        className={`${style.profile__container}  ${state !== "profile" ? "" : `${style.element__active}`} `}
+      </Link>
+      
+      <NavLink
+        className={style.profile__container}
+        activeClassName={style.element__active}
         type="button"
-        onClick={() => setState("profile")}
+        to="/profile"
       >
-        <ProfileIcon type={state === "profile" ? "primary" : "secondary"} />
-        <p
-          className={`${"text text_type_main-default pl-2"} ${
-            state === "profile" ? "" : "text_color_inactive"
-          }`}
-        >
+        <ProfileIcon type={matchedProfile ? "primary" : "secondary"} />
+        <p className="text text_type_main-default pl-2">
           Личный кабинет
         </p>
-      </button>
+      </NavLink>
     </header>
   );
 };

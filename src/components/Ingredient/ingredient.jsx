@@ -4,6 +4,7 @@ import { dataPropTypes } from "../../utils/types";
 import { useDispatch } from "react-redux";
 import Actions from "../../services/actions";
 import { useDrag } from "react-dnd";
+import { useHistory, useLocation } from 'react-router-dom';
 
 import {
   Counter,
@@ -16,9 +17,16 @@ const Ingredient = ({ ingredient, count }) => {
   const dispatch = useDispatch();
   const didMount = React.useRef(false);
 
-  const handleOpenModal = (ingredient) => {
-    dispatch({ type: Actions.SET_DETAILED_INGREDIENT, payload: ingredient });
-  };
+  const history = useHistory();
+  const location = useLocation();
+
+  const openDetailedIngredientPage = React.useCallback((ingredientId) => {
+  
+    history.push({
+      pathname: `/ingredients/${ingredientId}`,
+      state: { ingredientModal: location },
+    });
+  }, [history, location]);
 
   const [{ isDrag }, ref] = useDrag({
     type: "ingredients",
@@ -47,7 +55,7 @@ const Ingredient = ({ ingredient, count }) => {
     <li
       ref={ref}
       className={className}
-      onClick={() => handleOpenModal(ingredient)}
+      onClick={() => openDetailedIngredientPage(ingredient._id)}
     >
       <img src={ingredient.image} alt={`картинка ${ingredient.name}`} />
       <p className={style.price}>

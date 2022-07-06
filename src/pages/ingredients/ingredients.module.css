@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 520px;
+    padding-top: 180px;
+}
+
+.container div {
+    display: flex;
+    justify-content: space-between;
+}

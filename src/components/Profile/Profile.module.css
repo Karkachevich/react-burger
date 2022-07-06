@@ -1,0 +1,23 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 480px;
+}
+
+.input {
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.input div{
+    width: 100%;
+}
+
+.input input{
+    width: 1000%;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+}

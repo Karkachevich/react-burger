@@ -11,9 +11,13 @@ import IngredientConstructor from "../IngredientConstructor/ingredientConstructo
 import Actions from "../../services/actions";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
+import { useHistory } from "react-router-dom";
+
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { user } = useSelector((state) => state.auth);
   const { basket } = useSelector((state) => state.constructorIngredients);
   const { ingredientDragged } = useSelector((state) => state.ingredients);
   const orderReadiness = useSelector(
@@ -48,8 +52,6 @@ const BurgerConstructor = () => {
       )
   );
 
-  const isWaitingForOrderNumber = useSelector((state) => state.order.loading);
-
   const onDropIngredient = (ingredient) => {
     if (ingredient.type === "bun") {
       dispatch({
@@ -77,8 +79,13 @@ const BurgerConstructor = () => {
   });
 
   const getOrder = async () => {
-    if (isWaitingForOrderNumber) return;
-    dispatch(createOrder(basket.map((b) => b._id)));
+    if(user === null) {
+      history.push('/login');
+    }
+    else {
+      dispatch(createOrder(basket.map((b) => b._id)));
+    }
+   
   };
 
   return (
