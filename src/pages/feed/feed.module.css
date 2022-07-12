@@ -1,0 +1,40 @@
+.feedPage {
+    flex-direction: column;
+}
+
+.feed {
+    width: 600px;
+}
+
+.neighboringBlocks {
+    display: flex;
+}
+
+.neighboringBlocks > * {
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+
+.doneOrdersList {
+    padding: 0;
+    list-style: none;
+    height: 152px;
+}
+
+.doneOrder {
+    color: #00CCCC;
+}
+
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: calc((32px * 10) + 1px);
+    width: 272px;
+    box-sizing: border-box;
+}
+
+.listOrder {
+    margin-bottom: calc(var(--offset-base-size) * 2);
+}

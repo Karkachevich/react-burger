@@ -12,12 +12,14 @@ import Actions from "../../services/actions";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router-dom";
-
+import { auth } from "../../services/auth";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { user } = useSelector((state) => state.auth);
+  const { accessToken, refreshToken } = auth();
+  const isWaitingForOrderNumber = useSelector((state) => state.order.loading);
+  //const { user } = useSelector((state) => state.auth);
   const { basket } = useSelector((state) => state.constructorIngredients);
   const { ingredientDragged } = useSelector((state) => state.ingredients);
   const orderReadiness = useSelector(
@@ -79,10 +81,10 @@ const BurgerConstructor = () => {
   });
 
   const getOrder = async () => {
-    if(user === null) {
+    if(!(accessToken || refreshToken)) {
       history.push('/login');
     }
-    else {
+    else if (!isWaitingForOrderNumber){
       dispatch(createOrder(basket.map((b) => b._id)));
     }
    

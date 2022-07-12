@@ -27,7 +27,7 @@ export function ProtectedRoute({
     if (loading) {
       interval = setInterval(() => {
         setLoadingText(`Проверка авторизации${".".repeat(point)}`);
-        point = point === 4 ? 0 : ++point;
+        point = point === 3 ? 0 : ++point;
       }, 350);
     }
 

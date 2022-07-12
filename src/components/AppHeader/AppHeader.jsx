@@ -15,10 +15,10 @@ const AppHeader = () => {
 
   const matchedMain = matchPath(location.pathname, { path: ['/', '/react-burger'], exact: true });
   const matchedOrders = matchPath(location.pathname, {
-    path: "/orders",
+    path: "/feed",
     exact:  true
   });
-  const matchedProfile = matchPath(location.pathname, { path: "/profile", exact:  true});
+  const matchedProfile = matchPath(location.pathname, { path: ['/profile', '/profile/orders'], exact:  true});
   
   return (
     <header className={style.header}>
@@ -43,7 +43,7 @@ const AppHeader = () => {
           activeClassName={style.element__active}
           type="button"
           exact
-          to="/orders"
+          to="/feed"
         >
           <ListIcon type={matchedOrders ? "primary" : "secondary"} />
           <p className="text text_type_main-default pl-2">
