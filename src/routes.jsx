@@ -67,7 +67,7 @@ export function Routes() {
             </Modal>
           }
         />
-      )}
+      )} 
       {feedModal && (
         <Route
           path="/feed/:orderId"

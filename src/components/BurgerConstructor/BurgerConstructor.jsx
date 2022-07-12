@@ -18,10 +18,10 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { accessToken, refreshToken } = auth();
-  const isWaitingForOrderNumber = useSelector((state) => state.order.loading);
-  //const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { basket } = useSelector((state) => state.constructorIngredients);
   const { ingredientDragged } = useSelector((state) => state.ingredients);
+  const {loading} = useSelector((state) => state.order);
   const orderReadiness = useSelector(
     (state) =>
       state.constructorIngredients.basket.find(
@@ -81,10 +81,10 @@ const BurgerConstructor = () => {
   });
 
   const getOrder = async () => {
-    if(!(accessToken || refreshToken)) {
+    if(!(accessToken || refreshToken) && user === null) {
       history.push('/login');
     }
-    else if (!isWaitingForOrderNumber){
+    else {
       dispatch(createOrder(basket.map((b) => b._id)));
     }
    
@@ -144,7 +144,7 @@ const BurgerConstructor = () => {
           type="primary"
           size="large"
           onClick={getOrder}
-          disabled={!orderReadiness}
+          disabled={!orderReadiness || loading}
         >
           Оформить заказ
         </Button>
