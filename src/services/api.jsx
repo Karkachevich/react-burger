@@ -35,29 +35,34 @@ export const createOrder = (ingredients) => (dispatch) => {
     type: Actions.POST_ORDER,
   });
 
-  fetch(`${urlDomain}/orders`, {
+  request({
+    url: "orders",
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({ ingredients }),
   })
-    .then((res) => checkResponse(res))
-    .then((res) => {
-      dispatch({
-        type: Actions.POST_ORDER_SUCCESS,
-        payload: {
-          orderNumber: res.order.number,
-          burgerName: res.order.name,
-        },
-      });
+    .then((parsedResponse) => {
+      if (parsedResponse) {
+        const { order } = parsedResponse;
+        const { number, name } = order;
+
+        dispatch({
+          type: Actions.POST_ORDER_SUCCESS,
+          payload: {
+            orderNumber: number,
+            burgerName: name,
+          },
+        });
+        return;
+      }
+
+      return Promise.reject(new Error("Unknown response"));
     })
-    .catch((err) => {
+    .catch((err) =>
       dispatch({
         type: Actions.POST_ORDER_ERROR,
         payload: err.toLocaleString(),
-      });
-    });
+      })
+    );
 };
 
 const restoreSession = async ({ refreshToken }) => {

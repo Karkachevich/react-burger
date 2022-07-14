@@ -1,17 +1,30 @@
 import React from "react";
 import { deleteCookie } from "../../utils/cookie";
-import { matchPath, NavLink, useLocation } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  matchPath,
+  NavLink,
+  useLocation,
+} from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import styles from "./profile.module.css";
 import { Profile } from "../../components/Profile/profile";
 import { logoutUser } from "../../services/actions/auth";
+import { MyOrdersPage } from "../myOrders/myOrders";
 
 export function ProfilePage() {
+  
+
   const location = useLocation();
   const dispatch = useDispatch();
   const matchedProfile = matchPath(location.pathname, {
     path: "/profile",
+    exact: true,
+  });
+  const matchedMyOrders = matchPath(location.pathname, {
+    path: "/profile/orders",
     exact: true,
   });
 
@@ -69,8 +82,25 @@ export function ProfilePage() {
             </p>
           </div>
         )}
+        {matchedMyOrders && (
+          <div className="mt-20">
+            <p className="text text_type_main-default text_color_inactive">
+              В этом разделе вы можете
+            </p>
+            <p className="text text_type_main-default text_color_inactive">
+              просмотреть свою историю заказов
+            </p>
+          </div>
+        )}
       </nav>
-      <div className={styles.content}>{matchedProfile && <Profile />}</div>
+      <div className={styles.content}>
+      <Switch>
+          <Route path="/profile" exact component={Profile} />
+          <Route path="/profile/orders" exact component={MyOrdersPage} />
+        </Switch>
+      </div>
+        
+         
     </div>
   );
 }

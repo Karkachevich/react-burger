@@ -12,14 +12,16 @@ import Actions from "../../services/actions";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { useHistory } from "react-router-dom";
-
+import { auth } from "../../services/auth";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { accessToken, refreshToken } = auth();
   const { user } = useSelector((state) => state.auth);
   const { basket } = useSelector((state) => state.constructorIngredients);
   const { ingredientDragged } = useSelector((state) => state.ingredients);
+  const {loading} = useSelector((state) => state.order);
   const orderReadiness = useSelector(
     (state) =>
       state.constructorIngredients.basket.find(
@@ -79,7 +81,7 @@ const BurgerConstructor = () => {
   });
 
   const getOrder = async () => {
-    if(user === null) {
+    if(!(accessToken || refreshToken) && user === null) {
       history.push('/login');
     }
     else {
@@ -142,7 +144,7 @@ const BurgerConstructor = () => {
           type="primary"
           size="large"
           onClick={getOrder}
-          disabled={!orderReadiness}
+          disabled={!orderReadiness || loading}
         >
           Оформить заказ
         </Button>

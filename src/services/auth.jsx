@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import { getCookie, setCookie } from '../utils/cookie';
 import { AUTH_TOKEN_ALIVE_TIME } from '../utils/constants';
