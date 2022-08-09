@@ -5,7 +5,7 @@ import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstruc
 import Modal from "../../components/Modal/Modal";
 import OrderDetails from "../../components/OrderDetails/OrderDetails";
 import { Loader } from "../../ui/loader/loader";
-import Actions from "../../services/actions";
+import * as Actions from "../../services/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
