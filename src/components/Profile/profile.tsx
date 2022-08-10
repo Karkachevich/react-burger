@@ -29,8 +29,8 @@ export function Profile() {
   const inputNameRef = useRef<HTMLInputElement>(null);
   const inputPasswordRef = useRef<HTMLInputElement>(null);
 
-  const [isNameEdit, setIsNameEdit] = useState(false);
-  const [isPasswordEdit, setIsPasswordEdit] = useState(false);
+  const [isNameEdit, setIsNameEdit] = useState<boolean>(false);
+  const [isPasswordEdit, setIsPasswordEdit] = useState<boolean>(false);
 
   const onToggleNameEdit = () => {
     setIsNameEdit(!isNameEdit);

@@ -1,14 +1,13 @@
 import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/hooks";
 
 import {
   PasswordInput,
-  Input,
-  Button,
+  Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import { Button } from "../../components/Button/button";
 import { validateEmail } from "../../utils/validation";
 import { registerUser } from "../../services/actions/auth";
 
@@ -29,7 +28,7 @@ export function RegisterPage() {
     [isEmailValid, password, name]
   );
 
-  const submitRegistrationForm = (e) => {
+  const submitRegistrationForm = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(registerUser({ email, password, name }));
   };
@@ -53,7 +52,7 @@ export function RegisterPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             error={email !== "" && !isEmailValid()}
-            errorText={error || "Некорректный email"}
+            errorText={typeof error === 'string' ? error : "Некорректный email"}
           />
         </div>
         <div className={`${styles.input} mb-6`}>
@@ -67,7 +66,7 @@ export function RegisterPage() {
           <Button
             type="primary"
             size="large"
-            disabled={!isFormValid() || loading}
+            disabled={!isFormValid() || !!loading}
           >
             Зарегистрироваться
           </Button>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from "../../utils/hooks";
 
 
-import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-
+import { PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '../../components/Button/button';
 import styles from '../common.module.css';
 import { resetPassword } from '../../services/actions/auth';
 
@@ -24,7 +24,7 @@ export function ResetPasswordPage() {
   }, [history, email]);
 
 
-  const onSubmitResetPasswordForm = (e) => {
+  const onSubmitResetPasswordForm = (e: React.FormEvent) => {
     e.preventDefault();
 
     dispatch(resetPassword({ email, password, token }));

@@ -2,7 +2,7 @@ import React, { useMemo, useEffect } from "react";
 
 import { OrdersList } from "../../components/OrdersList/OrdersList";
 import { FEED_MAX_ORDERS } from "../../utils/constants";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import styles from "./feed.module.css";
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from "../../store/constants/ws";
 

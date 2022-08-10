@@ -2,8 +2,10 @@ import React from "react";
 import style from "./App.module.css";
 import AppHeader from "../components/AppHeader/AppHeader";
 import { Routes } from "../routes";
+import { useDispatch } from "../utils/hooks";
 import { getIngredients } from "../services/api";
-import { useDispatch } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -13,10 +15,12 @@ function App() {
   }, [dispatch]);
 
   return (
+    <BrowserRouter>
     <div className={style.App}>
       <AppHeader />
       <Routes />
     </div>
+    </BrowserRouter>
   );
 }
 

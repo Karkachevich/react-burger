@@ -7,7 +7,7 @@ import {
   NavLink,
   useLocation,
 } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 
 import styles from "./profile.module.css";
 import { Profile } from "../../components/Profile/profile";

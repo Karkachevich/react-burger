@@ -11,7 +11,17 @@ import {
   WS_GET_MESSAGE_AUTH,
 } from "../constants/wsAuth";
 
-export const wsActionsAuth = {
+export type TWSMiddlewareAuthActions = {
+  readonly wsInit: typeof WS_CONNECTION_START_AUTH;
+  readonly wsClose: typeof  WS_CONNECTION_CLOSE_AUTH;
+  readonly wsSendMessage: typeof WS_SEND_MESSAGE_AUTH;
+  readonly onOpen: typeof WS_CONNECTION_SUCCESS_AUTH;
+  readonly onClose: typeof WS_CONNECTION_CLOSED_AUTH;
+  readonly onError: typeof WS_CONNECTION_ERROR_AUTH;
+  readonly onMessage: typeof WS_GET_MESSAGE_AUTH;
+};
+
+export const wsActionsAuth: TWSMiddlewareAuthActions  = {
   wsInit: WS_CONNECTION_START_AUTH,
   wsClose: WS_CONNECTION_CLOSE_AUTH,
   wsSendMessage: WS_SEND_MESSAGE_AUTH,

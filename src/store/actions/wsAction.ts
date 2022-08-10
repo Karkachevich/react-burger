@@ -10,7 +10,17 @@ import {
   WS_GET_MESSAGE,
 } from "../constants/ws";
 
-export const wsActions = {
+export type TWSMiddlewareActions = {
+  readonly wsInit: typeof WS_CONNECTION_START;
+  readonly wsClose: typeof  WS_CONNECTION_CLOSE;
+  readonly wsSendMessage: typeof WS_SEND_MESSAGE;
+  readonly onOpen: typeof WS_CONNECTION_SUCCESS;
+  readonly onClose: typeof WS_CONNECTION_CLOSED;
+  readonly onError: typeof WS_CONNECTION_ERROR;
+  readonly onMessage: typeof WS_GET_MESSAGE;
+};
+
+export const wsActions:TWSMiddlewareActions  = {
   wsInit: WS_CONNECTION_START,
   wsClose: WS_CONNECTION_CLOSE,
   wsSendMessage: WS_SEND_MESSAGE,

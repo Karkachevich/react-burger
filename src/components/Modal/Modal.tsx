@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import React, { FC} from "react";
+import React, { FC, ReactNode} from "react";
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./Modal.module.css";
@@ -8,7 +8,7 @@ import ModalOverlay from "../ModalOverlay/ModalOverlay";
 export interface IModalProps {
   header?: string;
   onClose: () => void;
-  children: any;
+  children?: ReactNode;
 }
 
 const Modal: FC<IModalProps> = ({ children, header, onClose }) => {

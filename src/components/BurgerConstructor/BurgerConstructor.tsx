@@ -5,7 +5,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "../Button/button";
 import style from "./BurgerConstructor.module.css";
-//import { useDispatch} from "react-redux";
 import { useSelector, useDispatch } from "../../utils/hooks";
 import { createOrder } from "../../services/api";
 import IngredientConstructor from "../IngredientConstructor/ingredientConstructor";

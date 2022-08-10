@@ -6,7 +6,7 @@ import Modal from "../../components/Modal/Modal";
 import OrderDetails from "../../components/OrderDetails/OrderDetails";
 import { Loader } from "../../ui/loader/loader";
 import * as Actions from "../../services/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
@@ -26,7 +26,7 @@ export function MainPage() {
 
   return (
     <>
-      {isLoading && <Loader size="large" />}
+      {isLoading && <Loader size="large" inverse/>}
       {hasError && (
         <span className="text text_type_main-default mt-20">
           {`Произошла ошибка загрузки (${hasError})`}

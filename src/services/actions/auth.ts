@@ -19,17 +19,6 @@ import {
   logoutUserSuccess,
   logoutUserError
 } from "../../store/actions/auth";
-/*
-export const resetAuth = (reason) => (dispatch) => {
-  console.error(`Authentication reset cause ${reason}`);
-
-  const selfDestructiveExpiration = new Date("1970-01-01");
-  setCookie("accessToken", null, { expires: selfDestructiveExpiration });
-  setCookie("refreshToken", null, { expires: selfDestructiveExpiration });
-
-  dispatch({ type: Actions.RESET_AUTH });
-};
-*/
 
 export const loginUser: AppThunk =
   ({ email, password }: { email: string; password: string }) =>

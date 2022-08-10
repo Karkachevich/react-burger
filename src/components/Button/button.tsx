@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, { SyntheticEvent, ReactNode } from 'react';
 import styles from './button.module.css';
 
 export const Button: React.FC<{
@@ -8,7 +8,7 @@ export const Button: React.FC<{
     disabled?: boolean;
     name?: string;
     htmlType?: 'button' | 'submit' | 'reset';
-    children?: any;
+    children?: ReactNode;
 }> = ({
     children,
     type = 'primary',

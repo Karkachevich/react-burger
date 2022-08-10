@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import style from "./IngredientsDetails.module.css";
-import { useSelector } from 'react-redux';
+import { useSelector } from "../../utils/hooks";
+import { IIngredient } from "../../utils/interface/ingredient.interface";
 import { useHistory, useParams } from 'react-router-dom';
 
 
 function IngredientDetails() {
   const history = useHistory();
 
-  const { id } = useParams();
-  const [ingredient, setIngredient] = useState(null);
+  const { id } = useParams<{ id: string }>();
+  const [ingredient, setIngredient] = useState<IIngredient | null>(null);
 
   const { ingredients, loaded } = useSelector((state) => state.ingredients);
   

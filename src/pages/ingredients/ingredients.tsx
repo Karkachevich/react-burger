@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { useHistory, useParams } from "react-router-dom";
 import IngredientDetails from "../../components/IngredientsDetails/IngredientsDetails";
+import { IIngredient } from "../../utils/interface/ingredient.interface";
 
 import styles from "./ingredients.module.css";
 
 export function IngredientsPage() {
   const history = useHistory();
-  const { id } = useParams();
+  const { id } = useParams<{ id?: string }>();
 
   const ingredients = useSelector((state) => state.ingredients.ingredients);
-  const [ingredient, setIngredient] = useState(null);
+  const [ingredient, setIngredient] = useState<IIngredient | null>(null);
 
   const redirectToMainPage = useCallback(() => history.replace("/"), [history]);
 

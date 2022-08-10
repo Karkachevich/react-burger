@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import style from "./BurgerIngredients.module.css";
 import Tabs from "../Tabs/Tabs";
 import IngredientsList from "../IngredientsList/IngredientsList";
@@ -18,9 +18,9 @@ const BurgerIngredients = () => {
   };
 
   const onScroll = () => {
-    const containerRecTop: any = document.getElementById("container");
-    const saueceRecTop: any = document.getElementById("sauce");
-    const bunRecTop: any = document.getElementById("bun");
+    const containerRecTop = document.getElementById("container") as Element;
+    const saueceRecTop = document.getElementById("sauce") as Element;
+    const bunRecTop = document.getElementById("bun") as Element;
 
     if (
       bunRecTop.getBoundingClientRect().top +

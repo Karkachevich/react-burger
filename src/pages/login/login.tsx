@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 
 import {
   PasswordInput,
-  Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button } from "../../components/Button/button";
 import { validateEmail } from "../../utils/validation";
 
 import styles from "../common.module.css";
@@ -24,7 +24,7 @@ export function LoginPage() {
     [isEmailValid, password]
   );
 
-  const login = (e) => {
+  const login = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
   };

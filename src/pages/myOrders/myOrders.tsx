@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 import { OrdersList } from "../../components/OrdersList/OrdersList";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import {
   WS_CONNECTION_START_AUTH,
   WS_CONNECTION_CLOSE_AUTH,

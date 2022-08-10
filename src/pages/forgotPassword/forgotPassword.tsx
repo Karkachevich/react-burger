@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "../../utils/hooks";
 import {
   Input,
-  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import { Button } from "../../components/Button/button";
 import { validateEmail } from "../../utils/validation";
 import { requestPasswordResetCode } from "../../services/actions/auth";
 import styles from "../common.module.css";
@@ -19,7 +17,7 @@ export function ForgotPasswordPage() {
   const { resetPasswordCodeRequested } = useSelector((state) => state.auth);
   const isEmailValid = useCallback(() => !!validateEmail(email), [email]);
 
-  const restorePassword = (e) => {
+  const restorePassword = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(requestPasswordResetCode(email));
   };

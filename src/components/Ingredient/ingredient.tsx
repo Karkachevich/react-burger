@@ -1,6 +1,4 @@
 import React, { FC } from "react";
-import PropTypes from "prop-types";
-import { dataPropTypes } from "../../utils/types";
 import { useDispatch } from "../../utils/hooks";
 import * as Actions from "../../services/actions";
 import { useDrag } from "react-dnd";
@@ -14,13 +12,13 @@ import {
 
 import style from "./Ingredient.module.css";
 
-export interface IBurgerIngredientProps {
+export interface IIngredientProps {
   ingredient: IIngredient,
   count: number
 }
 
 
-const Ingredient: FC<IBurgerIngredientProps> = ({ ingredient, count }) => {
+const Ingredient: FC<IIngredientProps> = ({ ingredient, count }) => {
   const dispatch = useDispatch();
   const didMount = React.useRef(false);
 

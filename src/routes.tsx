@@ -24,6 +24,7 @@ export function Routes() {
   const history = useHistory();
   const location = useLocation();
 
+
   const definedLocation = useMemo(() => {
     if (typeof location?.state === 'object') {
       if (objectHasKeys(location?.state, ['ingredientModal'])
