@@ -17,7 +17,7 @@ import {
   fetchUserInfoSuccess,
   fetchUserInfoError,
   logoutUserSuccess,
-  logoutUserError
+  logoutUserError,
 } from "../../store/actions/auth";
 
 export const loginUser: AppThunk =
@@ -163,7 +163,7 @@ export const patchUser: AppThunk =
         }
       })
       .catch((err) => {
-        dispatch( patchUserInfoError(err.toLocaleString()));
+        dispatch(patchUserInfoError(err.toLocaleString()));
       });
   };
 

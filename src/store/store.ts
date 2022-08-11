@@ -8,16 +8,16 @@ import { compose, applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 
 declare global {
-    interface Window {
-      __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
+}
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(
   applyMiddleware(thunk),
-  applyMiddleware(socketMiddleware(WS_URL, wsActions, false)), 
+  applyMiddleware(socketMiddleware(WS_URL, wsActions, false)),
   applyMiddleware(socketMiddleware(WS_URL_AUTH, wsActionsAuth, true))
 );
 

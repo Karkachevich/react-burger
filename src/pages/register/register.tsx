@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "../../utils/hooks";
 
 import {
   PasswordInput,
-  Input
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "../../components/Button/button";
 import { validateEmail } from "../../utils/validation";
@@ -52,7 +52,7 @@ export function RegisterPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             error={email !== "" && !isEmailValid()}
-            errorText={typeof error === 'string' ? error : "Некорректный email"}
+            errorText={typeof error === "string" ? error : "Некорректный email"}
           />
         </div>
         <div className={`${styles.input} mb-6`}>

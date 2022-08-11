@@ -1,11 +1,6 @@
 import { urlDomain } from "../utils/constants";
 import * as Actions from "./actions";
 import { setTokens, auth } from "./auth";
-import {
-  ICommonResponse,
-  ITokenResponse,
-} from "../utils/interface/api.interface";
-
 import { AppDispatch, AppThunk } from "../utils/types";
 import {
   getIngredientsSuccess,
@@ -13,7 +8,7 @@ import {
 } from "../store/actions/ingredients";
 import { postOrderSuccess, postOrderError } from "../store/actions/order";
 
-const checkResponse = (res: any) => {
+const checkResponse = (res: Response) => {
   if (res.ok) {
     return res.json();
   }

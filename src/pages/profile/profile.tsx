@@ -15,8 +15,6 @@ import { logoutUser } from "../../services/actions/auth";
 import { MyOrdersPage } from "../myOrders/myOrders";
 
 export function ProfilePage() {
-  
-
   const location = useLocation();
   const dispatch = useDispatch();
   const matchedProfile = matchPath(location.pathname, {
@@ -94,13 +92,11 @@ export function ProfilePage() {
         )}
       </nav>
       <div className={styles.content}>
-      <Switch>
+        <Switch>
           <Route path="/profile" exact component={Profile} />
           <Route path="/profile/orders" exact component={MyOrdersPage} />
         </Switch>
       </div>
-        
-         
     </div>
   );
 }

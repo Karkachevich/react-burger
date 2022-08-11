@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 

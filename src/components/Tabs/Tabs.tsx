@@ -1,42 +1,26 @@
 import React, { FC } from "react";
-import PropTypes from "prop-types";
 import { Tab } from "../Tab/tab";
 import style from "./Tabs.module.css";
 
-
-
-
 type TTabsProps = {
-  onClickTab: ((value: string) => void),
-  current?:  string,
+  onClickTab: (value: string) => void;
+  current?: string;
 };
-const Tabs: FC<TTabsProps> = ({onClickTab, current}) => {
- 
-
+const Tabs: FC<TTabsProps> = ({ onClickTab, current }) => {
   return (
     <div id="tabs" className={style.Tabs}>
-      <Tab
-        value="bun"
-        active={current === "bun"}
-        onClick={ onClickTab}
-      > Булки</Tab>
-      <Tab
-        value="sauce"
-        active={current === "sauce"}
-        onClick={onClickTab}
-      >Соусы</Tab>
-      <Tab
-        value="main"
-        active={current === "main"}
-        onClick={onClickTab}
-      >Начинки</Tab>
+      <Tab value="bun" active={current === "bun"} onClick={onClickTab}>
+        {" "}
+        Булки
+      </Tab>
+      <Tab value="sauce" active={current === "sauce"} onClick={onClickTab}>
+        Соусы
+      </Tab>
+      <Tab value="main" active={current === "main"} onClick={onClickTab}>
+        Начинки
+      </Tab>
     </div>
   );
 };
-
-Tabs.propTypes = {
-  onClickTab: PropTypes.func.isRequired,
-  current:  PropTypes.string.isRequired
-}
 
 export default Tabs;

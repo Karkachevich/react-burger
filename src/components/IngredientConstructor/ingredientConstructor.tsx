@@ -5,7 +5,7 @@ import {
 import React, {FC} from "react";
 
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 import style from "./IngredientConstructor.module.css";
 import * as Actions from "../../services/actions";
 import { IIngredient } from "../../utils/interface/ingredient.interface";
